@@ -64,7 +64,11 @@ defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv" && killall
 defaults write -g AppleLanguages -array en
 
 echo "Installing casks for brave, ghostty, ollama iosevka"
-brew install --cask brave-browser ghostty ollama font-iosevka
+brew install --cask brave-browser \
+  ghostty \
+  ollama \
+  font-iosevka \
+  qbittorrent
 echo "Casks installed"
 
 echo "Installing rust"
