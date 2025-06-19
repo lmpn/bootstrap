@@ -1,0 +1,30 @@
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb-for-ols
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: 1000:1000
+    environment:
+      - COUCHDB_USER=couch-admin
+      - COUCHDB_PASSWORD=couch-password
+    volumes:
+      - ./couchdb-data:/opt/couchdb/data
+      - ./couchdb-etc:/opt/couchdb/etc/local.d
+    ports:
+      - 5984:5984
+    restart: unless-stopped
+    networks:
+      - default 
+  cloudflared:
+    image: cloudflare/cloudflared
+    container_name: cloudflare-tunnel
+    restart: unless-stopped
+    command: tunnel --url http://192.168.1.152:5984
+    networks:
+      - default 
+
+networks:
+  default:
+    name: livesync
+    external: true
