@@ -1,16 +1,24 @@
 #!/bin/bash
+# Prepare environment variables.
+# export hostname=localhost:5984
+# export username=couch-admin
+# export password=couch-password
+
+# Prepare directories which save data and configurations.
+mkdir -p couchdb-data
+mkdir -p couchdb-etc
 if [[ -z "$hostname" ]]; then
-    echo "ERROR: Hostname missing"
-    exit 1
+  echo "ERROR: Hostname missing"
+  exit 1
 fi
 if [[ -z "$username" ]]; then
-    echo "ERROR: Username missing"
-    exit 1
+  echo "ERROR: Username missing"
+  exit 1
 fi
 
 if [[ -z "$password" ]]; then
-    echo "ERROR: Password missing"
-    exit 1
+  echo "ERROR: Password missing"
+  exit 1
 fi
 
 echo "-- Configuring CouchDB by REST APIs... -->"
@@ -27,3 +35,4 @@ until (curl -X PUT "${hostname}/_node/nonode@nohost/_config/cors/credentials" -H
 until (curl -X PUT "${hostname}/_node/nonode@nohost/_config/cors/origins" -H "Content-Type: application/json" -d '"app://obsidian.md,capacitor://localhost,http://localhost"' --user "${username}:${password}"); do sleep 5; done
 
 echo "<-- Configuring CouchDB by REST APIs Done!"
+

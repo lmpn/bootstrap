@@ -20,10 +20,15 @@ services:
     image: cloudflare/cloudflared
     container_name: cloudflare-tunnel
     restart: unless-stopped
-    command: tunnel --url http://192.168.1.152:5984
+    command: tunnel run --token-file /run/secrets/tunnel_token
+    secrets:
+      - tunnel_token
     networks:
       - default 
 
+secrets:
+   tunnel_token:
+     file: tunnel_token.txt
 networks:
   default:
     name: livesync

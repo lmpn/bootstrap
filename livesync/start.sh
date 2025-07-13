@@ -1,11 +1,4 @@
-# Prepare environment variables.
-export hostname=localhost:5984
-export username=couch-admin
-export password=couch-password
-
-# Prepare directories which save data and configurations.
-mkdir couchdb-data
-mkdir couchdb-etc
+#!/bin/bash
+docker compose down
 docker compose up -d
-
-./server-init.sh
+./gen-setup-uri.sh
